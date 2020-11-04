@@ -4,6 +4,7 @@
   "description": "Fast and simple key-value pair storage for React Native using LevelDB native binding.",
   "main": "index.js",
   "scripts": {
+    "emu": "emulator @default -dns-server 8.8.8.8",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -31,5 +32,8 @@
     "react": "^17.0.1",
     "react-native": "^0.63.3",
     "typescript": "^3.8.3"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
