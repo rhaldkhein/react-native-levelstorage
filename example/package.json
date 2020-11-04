@@ -1,44 +1,28 @@
 {
   "name": "example",
-  "version": "0.0.1",
+  "version": "17.11.0",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
     "start": "react-native start",
-    "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "postinstall": "node scripts/postinstall.js",
+    "build:ios": "detox build --configuration ios.sim.debug",
+    "build:android-debug": "detox build --configuration android.emu.debug",
+    "build:android-release": "detox build --configuration android.emu.release",
+    "test:ios": "detox test --configuration ios.sim.debug",
+    "test:android-debug": "detox test --configuration android.emu.debug",
+    "test:android-release": "detox test --configuration android.emu.release",
+    "test:android-release-ci": "detox test --configuration android.emu.release -l verbose --headless --record-logs all --take-screenshots all",
+    "e2e:ios": "npm run build:ios && npm run test:ios",
+    "e2e:android-debug": "npm run build:android-debug && npm run test:android-debug",
+    "e2e:android-release": "npm run build:android-release && npm run test:android-release",
+    "clean:android": "pushd android && ./gradlew clean && popd"
   },
   "dependencies": {
-    "react": "16.13.1",
-    "react-native": "0.63.3",
-    "react-native-leveldb": "./.."
+    "react": "16.11.x",
+    "react-native": "0.62.x"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.4",
-    "@babel/runtime": "^7.8.4",
-    "@react-native-community/eslint-config": "^1.1.0",
-    "@types/jest": "^25.2.3",
-    "@types/react-native": "^0.63.2",
-    "@types/react-test-renderer": "^16.9.2",
-    "@typescript-eslint/eslint-plugin": "^2.27.0",
-    "@typescript-eslint/parser": "^2.27.0",
-    "babel-jest": "^25.1.0",
-    "eslint": "^6.5.1",
-    "jest": "^25.1.0",
-    "metro-react-native-babel-preset": "^0.59.0",
-    "react-test-renderer": "16.13.1",
-    "typescript": "^3.8.3"
-  },
-  "jest": {
-    "preset": "react-native",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
+    "detox": "^17.11.0",
+    "mocha": "^6.1.3"
   }
 }
