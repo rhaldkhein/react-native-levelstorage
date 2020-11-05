@@ -3,7 +3,10 @@
   "version": "17.11.0",
   "private": true,
   "scripts": {
-    "start": "react-native start",
+    "emu": "emulator @default -dns-server 1.1.1.1",
+    "and": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start --reset-cache",
     "postinstall": "node scripts/postinstall.js",
     "build:ios": "detox build --configuration ios.sim.debug",
     "build:android-debug": "detox build --configuration android.emu.debug",

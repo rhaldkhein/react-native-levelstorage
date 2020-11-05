@@ -7,12 +7,13 @@
 import React from 'react'
 import {
   AppRegistry,
-  View
+  View,
+  Text
 } from 'react-native'
 
-function Example () {
+function Example() {
   return <View testID='welcome'>
-    Example
+    <Text>Example</Text>
   </View>
 }
 
