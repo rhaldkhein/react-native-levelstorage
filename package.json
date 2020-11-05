@@ -1,6 +1,6 @@
 {
   "name": "react-native-leveldb",
-  "version": "0.0.1",
+  "version": "0.1.0-0",
   "description": "Fast and simple key-value pair storage for React Native using LevelDB native binding.",
   "main": "index.js",
   "scripts": {
