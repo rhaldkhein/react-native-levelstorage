@@ -13,12 +13,22 @@ import {
   TouchableOpacity
 } from 'react-native';
 
+import RNLeveldown from 'react-native-leveldown'
+import LevelUp from 'levelup'
+
 class example extends Component {
   constructor(props) {
     super(props);
     this.state = {
       greeting: undefined
     };
+    const run = async () => {
+      const db = LevelUp(new RNLeveldown("myDatabaseName"));
+      await db.put("hello", "world");
+      await db.get("hello") // # => "world"
+      await db.close();
+    }
+    run()
   }
   render() {
     if (this.state.greeting) return this.renderAfterButton();

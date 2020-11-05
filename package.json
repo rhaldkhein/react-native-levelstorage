@@ -26,6 +26,13 @@
     "url": "https://github.com/rhaldkhein/react-native-leveldb/issues"
   },
   "homepage": "https://github.com/rhaldkhein/react-native-leveldb#readme",
+  "dependencies": {
+    "assert": "^2.0.0",
+    "events": "^3.2.0",
+    "levelup": "^4.4.0",
+    "react-native-leveldown": "^1.0.0",
+    "util": "^0.12.3"
+  },
   "peerDependencies": {
     "react": "^16.8",
     "react-native": ">=0.60"
