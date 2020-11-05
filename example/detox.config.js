@@ -36,20 +36,20 @@ module.exports = {
         "sessionId": "com.wix.demo.react.native"
       }
     },
-    "android.emu.debug": {
+    "android.debug": {
       "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
       "build": "cd android ; ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug ; cd -",
       "type": "android.emulator",
       "device": {
-        "avdName": "Pixel_API_28"
+        "avdName": "default"
       }
     },
-    "android.emu.release": {
+    "android.release": {
       "binaryPath": "android/app/build/outputs/apk/release/app-release.apk",
       "build": "cd android ; ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release ; cd -",
       "type": "android.emulator",
       "device": {
-        "avdName": "Pixel_API_28"
+        "avdName": "default"
       }
     }
   }
