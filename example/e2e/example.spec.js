@@ -1,5 +1,6 @@
 
 describe('Example', () => {
+  
   beforeEach(async () => {
     await device.reloadReactNative()
   })
@@ -17,4 +18,5 @@ describe('Example', () => {
     await element(by.id('world_button')).tap()
     await expect(element(by.text('World!!!'))).toBeVisible()
   })
+
 })

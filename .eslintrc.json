@@ -1,12 +1,11 @@
 {
     "env": {
         "browser": true,
-        "es2021": true,
-        "jest": true,
-        "jest/globals": true
+        "es2021": true
     },
     "extends": [
-        "standard"
+        "standard",
+        "plugin:mocha/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -15,28 +14,11 @@
     },
     "plugins": [
         "@typescript-eslint",
-        "jest",
-        "detox"
+        "mocha"
     ],
     "rules": {
-        "jest/no-disabled-tests": "warn",
-        "jest/no-focused-tests": "error",
-        "jest/no-identical-title": "error",
-        "jest/prefer-to-have-length": "warn",
-        "jest/valid-expect": "error"
+        "mocha/no-mocha-arrows": false
     },
     "globals": {
-        "it": true,
-        "expect": true,
-        "element": true,
-        "describe": true,
-        "xdescribe": true,
-        "by": true,
-        "device": true,
-        "beforeAll": true,
-        "beforeEach": true,
-        "afterAll": true,
-        "jest": true,
-        "jasmine": true
     }
 }
