@@ -13,15 +13,12 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import storage from './dist'
-
 class example extends Component {
   constructor(props) {
     super(props);
     this.state = {
       greeting: undefined
     };
-    storage.hello()
   }
   render() {
     if (this.state.greeting) return this.renderAfterButton();
