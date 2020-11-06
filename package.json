@@ -1,5 +1,5 @@
 {
-  "name": "react-native-leveldb",
+  "name": "react-native-levelstorage",
   "version": "0.1.0-0",
   "description": "Fast and simple key-value pair storage for React Native using LevelDB native binding.",
   "main": "index.js",
@@ -7,12 +7,13 @@
     "build": "tsc --outDir dist",
     "build:e2e": "tsc --outDir example/dist",
     "build:e2e:android": "npm run build:e2e && cd example && detox build -c android.release",
+    "postinstall": "cd example && npm install",
     "test:android": "npm run build:e2e:android && cd example && detox test -c android.release",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://rhaldkhein@github.com/rhaldkhein/react-native-leveldb.git"
+    "url": "git+https://rhaldkhein@github.com/rhaldkhein/react-native-levelstorage.git"
   },
   "keywords": [
     "storage",
@@ -23,9 +24,9 @@
   "author": "RhaldKhein<undyingmind@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rhaldkhein/react-native-leveldb/issues"
+    "url": "https://github.com/rhaldkhein/react-native-levelstorage/issues"
   },
-  "homepage": "https://github.com/rhaldkhein/react-native-leveldb#readme",
+  "homepage": "https://github.com/rhaldkhein/react-native-levelstorage#readme",
   "dependencies": {
     "assert": "^2.0.0",
     "events": "^3.2.0",
