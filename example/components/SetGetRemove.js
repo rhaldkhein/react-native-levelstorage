@@ -9,7 +9,7 @@ import storage from '../dist'
 
 function SetGetRemove({ id, itemKey, itemValue, promise }) {
   id = id + (promise ? '_promise' : '_callback')
-  const [value, setValue] = useState('-')
+  const [value, setValue] = useState()
   const clickSetGet = promise
     ? async () => {
         await storage.setItem(itemKey, itemValue)
@@ -52,7 +52,7 @@ function SetGetRemove({ id, itemKey, itemValue, promise }) {
         onPress={clickRemove}
         title={id + '_remove'} />
       <Text testID={id + '_value'}>
-        {value}
+        {value === null ? 'null' : value}
       </Text>
     </View>
   )
