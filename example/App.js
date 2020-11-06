@@ -10,12 +10,12 @@ import {
   View
 } from 'react-native'
 import SetGetRemove from './components/SetGetRemove'
-import { Buffer } from 'buffer'
+// import { Buffer } from 'buffer'
 
 const data = [
-  { id: 'string', key: 'key_string', value: 'value_string' },
-  { id: 'number', key: 123, value: 456 },
-  { id: 'buffer', key: Buffer.from([1, 2, 3]), value: Buffer.from([1, 2, 3]) }
+  { id: 'string', key: 'key_string', value: 'value_string' }
+  // { id: 'number', key: 123, value: 456 },
+  // { id: 'buffer', key: Buffer.from([1, 2, 3]), value: Buffer.from([1, 2, 3]) }
 ]
 
 function Example() {

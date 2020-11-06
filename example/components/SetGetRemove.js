@@ -5,45 +5,50 @@ import {
   Button,
   Text
 } from 'react-native'
-import storage from '../dist'
+// import storage from '../dist'
+import RNLeveldown from 'react-native-leveldown'
+import LevelUp from 'levelup'
+
+const db = LevelUp(new RNLeveldown(name))
+db.put('hello', 'world')
 
 function SetGetRemove({ id, itemKey, itemValue, promise }) {
   id = id + (promise ? '_promise' : '_callback')
-  const [value, setValue] = useState()
-  const clickSetGet = promise
-    ? async () => {
-        await storage.setItem(itemKey, itemValue)
-        const value = await storage.getItem(itemKey)
-        setValue(value)
-      }
-    : () => {
-        storage.setItem(itemKey, itemValue, err => {
-          if (err) return
-          storage.getItem(itemKey, (err, value) => {
-            if (err) return
-            setValue(value)
-          })
-        })
-      }
-  const clickRemove = promise
-    ? async () => {
-        await storage.removeItem(itemKey)
-        const value = await storage.getItem(itemKey)
-        setValue(value)
-      }
-    : () => {
-        storage.removeItem(itemKey, err => {
-          if (err) return
-          storage.getItem(itemKey, (err, value) => {
-            if (err) return
-            setValue(value)
-          })
-        })
-      }
+  // const [value, setValue] = useState()
+  // const clickSetGet = promise
+  //   ? async () => {
+  //       await storage.setItem(itemKey, itemValue)
+  //       const value = await storage.getItem(itemKey)
+  //       setValue(value)
+  //     }
+  //   : () => {
+  //       storage.setItem(itemKey, itemValue, err => {
+  //         if (err) return
+  //         storage.getItem(itemKey, (err, value) => {
+  //           if (err) return
+  //           setValue(value)
+  //         })
+  //       })
+  //     }
+  // const clickRemove = promise
+  //   ? async () => {
+  //       await storage.removeItem(itemKey)
+  //       const value = await storage.getItem(itemKey)
+  //       setValue(value)
+  //     }
+  //   : () => {
+  //       storage.removeItem(itemKey, err => {
+  //         if (err) return
+  //         storage.getItem(itemKey, (err, value) => {
+  //           if (err) return
+  //           setValue(value)
+  //         })
+  //       })
+  //     }
 
   return (
     <View>
-      <Button
+      {/* <Button
         testID={id + '_setget'}
         onPress={clickSetGet}
         title={id + '_setget'} />
@@ -53,7 +58,8 @@ function SetGetRemove({ id, itemKey, itemValue, promise }) {
         title={id + '_remove'} />
       <Text testID={id + '_value'}>
         {value === null ? 'null' : value}
-      </Text>
+      </Text> */}
+      <Text>Foo</Text>
     </View>
   )
 }

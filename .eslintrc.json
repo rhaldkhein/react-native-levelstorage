@@ -15,7 +15,8 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "space-before-function-paren": 0
+        "space-before-function-paren": 0,
+        "padded-blocks": 0
     },
     "globals": {
         "beforeEach": true,
