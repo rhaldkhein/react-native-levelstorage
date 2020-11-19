@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "cd example && npm start",
+    "android": "cd example && npm run android",
     "build": "tsc --outDir dist",
     "build:e2e": "tsc --outDir example/dist",
     "build:e2e:android:debug": "npm run build:e2e && cd example && detox build -c android.debug",

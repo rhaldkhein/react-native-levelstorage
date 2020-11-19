@@ -16,7 +16,8 @@
     ],
     "rules": {
         "space-before-function-paren": 0,
-        "padded-blocks": 0
+        "padded-blocks": 0,
+        "no-dupe-class-members": 0
     },
     "globals": {
         "beforeEach": true,

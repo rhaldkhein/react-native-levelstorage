@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "assert": "^2.0.0",
+    "bson": "^4.2.0",
     "events": "^3.2.0",
     "levelup": "^4.4.0",
     "react": "16.13.1",
