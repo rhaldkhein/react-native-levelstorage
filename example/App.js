@@ -1,43 +1,139 @@
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow strict-local
  */
 
-// eslint-disable-next-line no-use-before-define
-import React from 'react'
+import React from 'react';
 import {
-  AppRegistry,
-  View
-} from 'react-native'
-import SetGetRemove from './components/SetGetRemove'
-// import { Buffer } from 'buffer'
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  View,
+  Text,
+  StatusBar,
+} from 'react-native';
 
-const data = [
-  { id: 'string', key: 'key_string', value: 'value_string' }
-  // { id: 'number', key: 123, value: 456 },
-  // { id: 'buffer', key: Buffer.from([1, 2, 3]), value: Buffer.from([1, 2, 3]) }
-]
+import {
+  Header,
+  LearnMoreLinks,
+  Colors,
+  DebugInstructions,
+  ReloadInstructions,
+} from 'react-native/Libraries/NewAppScreen';
+import RNLeveldown from 'react-native-leveldown'
+import LevelUp from 'levelup'
 
-function Example() {
-  return <View testID='root'>
-    {
-      data.map(item => {
-        return <View key={item.id}>
-          <SetGetRemove
-            itemValue={item.value}
-            itemKey={item.key}
-            id={item.id}
-            promise={true} />
-          <SetGetRemove
-            itemValue={item.value}
-            itemKey={item.key}
-            id={item.id}
-            promise={false} />
-        </View>
-      })
-    }
+const fn = async () => {
+  console.log('- - -');
+  const db = LevelUp(new RNLeveldown('__TEST__'))
+  try {
 
-  </View>
+    await db.put('foo', 1)
+    await db.put('bar', true)
+
+    const foo = await db.get('foo', { asBuffer: false })
+    const bar = await db.get('bar', { asBuffer: false })
+
+    console.log(typeof foo)
+    console.log(typeof bar)
+
+  } catch (error) {
+    // nothing  
+    console.error(error)
+  }
+  await db.close()
 }
 
-AppRegistry.registerComponent('example', () => Example)
+fn()
+
+const App = () => {
+  return (
+    <>
+      <StatusBar barStyle="dark-content" />
+      <SafeAreaView>
+        <ScrollView
+          contentInsetAdjustmentBehavior="automatic"
+          style={styles.scrollView}>
+          <Header />
+          {global.HermesInternal == null ? null : (
+            <View style={styles.engine}>
+              <Text style={styles.footer}>Engine: Hermes</Text>
+            </View>
+          )}
+          <View style={styles.body} testID='stepone'>
+            <View style={styles.sectionContainer}>
+              <Text style={styles.sectionTitle}>Step One</Text>
+              <Text style={styles.sectionDescription}>
+                Edit <Text style={styles.highlight}>App.js</Text> to change this
+                screen and then come back to see your edits.
+              </Text>
+            </View>
+            <View style={styles.sectionContainer}>
+              <Text style={styles.sectionTitle}>See Your Changes</Text>
+              <Text style={styles.sectionDescription}>
+                <ReloadInstructions />
+              </Text>
+            </View>
+            <View style={styles.sectionContainer}>
+              <Text style={styles.sectionTitle}>Debug</Text>
+              <Text style={styles.sectionDescription}>
+                <DebugInstructions />
+              </Text>
+            </View>
+            <View style={styles.sectionContainer}>
+              <Text style={styles.sectionTitle}>Learn More</Text>
+              <Text style={styles.sectionDescription}>
+                Read the docs to discover what to do next:
+              </Text>
+            </View>
+            <LearnMoreLinks />
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </>
+  );
+};
+
+const styles = StyleSheet.create({
+  scrollView: {
+    backgroundColor: Colors.lighter,
+  },
+  engine: {
+    position: 'absolute',
+    right: 0,
+  },
+  body: {
+    backgroundColor: Colors.white,
+  },
+  sectionContainer: {
+    marginTop: 32,
+    paddingHorizontal: 24,
+  },
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: '600',
+    color: Colors.black,
+  },
+  sectionDescription: {
+    marginTop: 8,
+    fontSize: 18,
+    fontWeight: '400',
+    color: Colors.dark,
+  },
+  highlight: {
+    fontWeight: '700',
+  },
+  footer: {
+    color: Colors.dark,
+    fontSize: 12,
+    fontWeight: '600',
+    padding: 4,
+    paddingRight: 12,
+    textAlign: 'right',
+  },
+});
+
+export default App;

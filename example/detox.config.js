@@ -1,56 +1,35 @@
 module.exports = {
-  'test-runner': 'mocha',
-  'runner-config': 'e2e/.mocharc.json',
-  specs: process.env.DETOX_EXPOSE_GLOBALS === '0' ? 'e2eExplicitRequire' : 'e2e',
-  behavior: {
-    init: {
-      exposeGlobals: process.env.DETOX_EXPOSE_GLOBALS !== '0'
-    }
+  "testRunner": "jest",
+  "runnerConfig": process.env.DETOX_EXPOSE_GLOBALS === '0' ? 'e2eExplicitRequire/config.json' : 'e2e/config.json',
+  "specs": process.env.DETOX_EXPOSE_GLOBALS === '0' ? 'e2eExplicitRequire' : 'e2e',
+  "behavior": {
+    "init": {
+      "exposeGlobals": process.env.DETOX_EXPOSE_GLOBALS === '0' ? false : true,
+    },
   },
-  configurations: {
-    'ios.sim.release': {
-      binaryPath: 'ios/build/Build/Products/Release-iphonesimulator/example.app',
-      build: 'export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -project ios/example.xcodeproj -UseNewBuildSystem=NO -scheme example -configuration Release -sdk iphonesimulator -derivedDataPath ios/build -quiet',
-      type: 'ios.simulator',
-      device: {
-        type: 'iPhone 11 Pro'
+  "configurations": {
+    "ios.sim.release": {
+      "type": "ios.simulator",
+      "binaryPath": "./ios/build/Build/Products/Release-iphonesimulator/example.app",
+      "device": {
+          "type": "iPhone 11 Pro"
       }
     },
-    'ios.sim.debug': {
-      binaryPath: 'ios/build/Build/Products/Debug-iphonesimulator/example.app',
-      build: 'xcodebuild -project ios/example.xcodeproj -UseNewBuildSystem=NO -scheme example -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build',
-      type: 'ios.simulator',
-      device: {
-        type: 'iPhone 11 Pro'
+    "android.debug": {
+      "type": "android.emulator",
+      "build": "cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && cd ..",
+      "binaryPath": "./android/app/build/outputs/apk/release/app-debug.apk",
+      "device": {
+          "avdName": "Emu_E2E"
       }
     },
-    'ios.none': {
-      binaryPath: 'ios/build/Build/Products/Debug-iphonesimulator/example.app',
-      build: 'xcodebuild -project ios/example.xcodeproj -UseNewBuildSystem=NO -scheme example -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build',
-      type: 'ios.none',
-      device: {
-        type: 'iPhone 11 Pro'
-      },
-      session: {
-        server: 'ws://localhost:8099',
-        sessionId: 'com.wix.demo.react.native'
-      }
-    },
-    'android.debug': {
-      binaryPath: 'android/app/build/outputs/apk/debug/app-debug.apk',
-      build: 'cd android ; ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug ; cd -',
-      type: 'android.emulator',
-      device: {
-        avdName: 'default'
-      }
-    },
-    'android.release': {
-      binaryPath: 'android/app/build/outputs/apk/release/app-release.apk',
-      build: 'cd android ; ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release ; cd -',
-      type: 'android.emulator',
-      device: {
-        avdName: 'default'
+    "android.release": {
+      "type": "android.emulator",
+      "build": "cd android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release && cd ..",
+      "binaryPath": "./android/app/build/outputs/apk/release/app-release.apk",
+      "device": {
+          "avdName": "Emu_E2E"
       }
     }
   }
-}
+};
