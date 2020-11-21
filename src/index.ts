@@ -1,7 +1,6 @@
 import RNLevelDown from 'react-native-leveldown'
 import LevelUp, { LevelUp as ILevelUp } from 'levelup'
 import { AbstractIterator } from 'abstract-leveldown'
-import { Buffer } from 'buffer'
 
 class Storage {
   private _db: ILevelUp<RNLevelDown, AbstractIterator<any, any>>
@@ -19,46 +18,37 @@ class Storage {
 
   async setItem(
     key: string,
-    value: string | Buffer,
-    callback?: (err: Error) => void):
+    value: string,
+    callback?: (err?: Error) => void):
     Promise<void> {
 
-    if (!Buffer.isBuffer(value) && typeof value !== 'string') {
-      throw new Error('Value must be string or buffer')
+    try {
+      if (typeof key !== 'string' || typeof value !== 'string') {
+        throw new Error('Key and value must be string')
+      }
+      await this._db.put(key, value)
+      if (callback) callback()
+    } catch (error) {
+      if (callback) callback(error)
+      else throw error
     }
-    return this._db.put(key, value, callback)
   }
 
   async getItem(
     key: string,
-    callback?: (err: Error | null, value: Buffer | null) => void):
-    Promise<string | null>
+    callback?: (err?: Error, value?: string | null) => void):
+    Promise<string | null> {
 
-  async getItem(
-    key: string,
-    buffer: boolean,
-    callback?: (err: Error | null, value: Buffer | null) => void):
-    Promise<string | Buffer | null>
-
-  async getItem(
-    key: string,
-    buffer?: boolean | ((err: Error | null, value: Buffer | null) => void),
-    callback?: (err: Error | null, value: Buffer | null) => void):
-    Promise<string | Buffer | null> {
-    if (!callback && typeof buffer === 'function') {
-      callback = buffer
-      buffer = false
-    }
-    if (buffer === undefined) {
-      buffer = false
-    }
     try {
-      const value = await this._db.get(key, { asBuffer: (buffer as boolean) })
-      if (callback) callback(null, value)
+      if (typeof key !== 'string') {
+        throw new Error('Key must be string')
+      }
+      const value = await this._db.get(key, { asBuffer: false })
+      if (callback) callback(undefined, value)
       return value
     } catch (error) {
       if (error.type === 'NotFoundError') {
-        if (callback) callback(null, null)
+        if (callback) callback(undefined, null)
       } else {
         if (callback) callback(error, null)
         else throw error
@@ -69,10 +59,16 @@ class Storage {
 
   async removeItem(
     key: string,
-    callback?: (err: Error) => void):
+    callback?: (err?: Error) => void):
     Promise<void> {
 
-    return this._db.del(key, callback)
+    try {
+      await this._db.del(key)
+      if (callback) callback()
+    } catch (error) {
+      if (callback) callback(error)
+      else throw error
+    }
   }
 
   private async _open() { }

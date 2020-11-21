@@ -6,7 +6,6 @@ import {
   Button
 } from 'react-native'
 import storage from '../dist'
-import { Buffer } from 'buffer'
 
 function SetGetRemove({ id, itemKey, itemValue, promise }) {
   const testId = id + (promise ? '_promise' : '_callback')
@@ -14,13 +13,13 @@ function SetGetRemove({ id, itemKey, itemValue, promise }) {
   const clickSetGet = promise
     ? async () => {
       await storage.setItem(itemKey, itemValue)
-      const value = await storage.getItem(itemKey, id === 'buffer')
+      const value = await storage.getItem(itemKey)
       setValue(value)
     }
     : () => {
       storage.setItem(itemKey, itemValue, err => {
         if (err) return
-        storage.getItem(itemKey, id === 'buffer', (err, value) => {
+        storage.getItem(itemKey, (err, value) => {
           if (err) return
           setValue(value)
         })
@@ -53,11 +52,7 @@ function SetGetRemove({ id, itemKey, itemValue, promise }) {
         onPress={clickRemove}
         title={testId + '_remove'} />
       <Text testID={testId + '_value'}>
-        {
-          value === null ?
-            'null' :
-            (Buffer.isBuffer(value) ? value.toString('base64') : value)
-        }
+        {value === null ? 'null' : value}
       </Text>
     </View>
   )

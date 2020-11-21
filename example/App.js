@@ -14,8 +14,8 @@ import SetGetRemove from './components/SetGetRemove'
 import { Buffer } from 'buffer'
 
 const data = [
-  { id: 'string', key: 'key_string', value: 'value_string' },
-  { id: 'buffer', key: 'key_buffer', value: Buffer.from([1, 2, 3]) }
+  { id: 'string_a', key: 'key_string_a', value: 'value_string_a' },
+  { id: 'string_b', key: 'key_string_b', value: 'value_string_b' }
 ]
 
 const App = () => {
