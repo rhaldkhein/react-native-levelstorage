@@ -1,12 +1,22 @@
 import RNLevelDown from 'react-native-leveldown'
 import LevelUp, { LevelUp as ILevelUp } from 'levelup'
-import { AbstractIterator } from 'abstract-leveldown'
+import { AbstractIterator, AbstractIteratorOptions } from 'abstract-leveldown'
+import pDoWhilst from 'p-do-whilst'
 
 class Storage {
   private _db: ILevelUp<RNLevelDown, AbstractIterator<any, any>>
 
   constructor(name: string) {
     this._db = LevelUp(new RNLevelDown(name))
+  }
+
+  get length(): Promise<number> {
+    return new Promise((resolve, reject) => {
+      let count = 0
+      this.forEach(() => {
+        count++
+      }).then(() => resolve(count)).catch(reject)
+    })
   }
 
   create(
@@ -18,62 +28,127 @@ class Storage {
 
   async setItem(
     key: string,
-    value: string,
-    callback?: (err?: Error) => void):
+    value: string):
     Promise<void> {
 
-    try {
-      if (typeof key !== 'string' || typeof value !== 'string') {
-        throw new Error('Key and value must be string')
-      }
-      await this._db.put(key, value)
-      if (callback) callback()
-    } catch (error) {
-      if (callback) callback(error)
-      else throw error
+    if (typeof key !== 'string' || typeof value !== 'string') {
+      throw new Error('Key and value must be string')
     }
+    return this._db.put(key, value)
   }
 
   async getItem(
-    key: string,
-    callback?: (err?: Error, value?: string | null) => void):
+    key: string):
     Promise<string | null> {
 
     try {
       if (typeof key !== 'string') {
         throw new Error('Key must be string')
       }
-      const value = await this._db.get(key, { asBuffer: false })
-      if (callback) callback(undefined, value)
-      return value
+      return await this._db.get(key, { asBuffer: false })
     } catch (error) {
-      if (error.type === 'NotFoundError') {
-        if (callback) callback(undefined, null)
-      } else {
-        if (callback) callback(error, null)
-        else throw error
+      if (error.type !== 'NotFoundError') {
+        throw error
       }
     }
     return null
   }
 
   async removeItem(
-    key: string,
-    callback?: (err?: Error) => void):
+    key: string):
     Promise<void> {
 
-    try {
-      await this._db.del(key)
-      if (callback) callback()
-    } catch (error) {
-      if (callback) callback(error)
-      else throw error
+    if (typeof key !== 'string') {
+      throw new Error('Key must be string')
     }
+    return this._db.del(key)
   }
 
-  private async _open() { }
+  public async filter(
+    filter: (value: string, key: string) => boolean,
+    options?: AbstractIteratorOptions<any>):
+    Promise<string[]> {
 
-  private async _close() { }
+    options = options || {}
+    options.keyAsBuffer = false
+    options.valueAsBuffer = false
+    const iter = this._db.iterator(options)
+    const items: string[] = []
+    let error: Error | undefined
+    try {
+      await pDoWhilst(
+        () => this._next(iter),
+        (result: [string, string] | undefined) => {
+          if (result === undefined) return false
+          if (filter(result[1], result[0])) {
+            items.push(result[1])
+          }
+          return true
+        }
+      )
+    } catch (err) {
+      error = err
+    }
+    await new Promise((resolve, reject) => {
+      iter.end((err) => {
+        if (err || error) reject(err || error)
+        else resolve()
+      })
+    })
+    return items
+  }
+
+  public async forEach(
+    iteratee: (value: string, key: string) => false | void,
+    options?: AbstractIteratorOptions<any>):
+    Promise<void> {
+
+    options = options || {}
+    options.keyAsBuffer = false
+    options.valueAsBuffer = false
+    const iter = this._db.iterator(options)
+    let error: Error | undefined
+    try {
+      await pDoWhilst(
+        () => this._next(iter),
+        (result: [string, string] | undefined) => {
+          if (
+            result === undefined ||
+            iteratee(result[1], result[0]) === false
+          ) return false
+          return true
+        }
+      )
+    } catch (err) {
+      error = err
+    }
+    await new Promise((resolve, reject) => {
+      iter.end((err) => {
+        if (err || error) reject(err || error)
+        else resolve()
+      })
+    })
+  }
+
+  public async clear():
+    Promise<void> {
+
+    return this._db.clear(err => {
+      console.log('cleared', err)
+    })
+  }
+
+  private _next(
+    iter: any):
+    Promise<[string, string] | undefined> {
+
+    return new Promise((resolve, reject) => {
+      iter.next((err: Error, key: string, value: string) => {
+        if (err) return reject(err)
+        resolve(key ? [key, value] : undefined)
+      })
+    })
+  }
 
 }
 
