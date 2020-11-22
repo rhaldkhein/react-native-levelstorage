@@ -8,11 +8,11 @@
     "android": "cd example && npm run android",
     "build": "tsc --outDir dist",
     "build:e2e": "tsc --outDir example/dist",
-    "build:e2e:android:debug": "npm run build:e2e && cd example && detox build -c android.debug",
     "build:e2e:android": "npm run build:e2e && cd example && detox build -c android.release",
+    "build:e2e:ios": "npm run build:e2e && cd example && detox build -c ios.release",
     "postinstall": "cd example && npm install",
-    "test:android:debug": "npm run build:e2e:android:debug && cd example && detox test -c android.debug",
     "test:android": "npm run build:e2e:android && cd example && detox test -c android.release",
+    "test:ios": "npm run build:e2e:ios && cd example && detox test -c ios.release",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
