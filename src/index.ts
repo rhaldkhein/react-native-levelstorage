@@ -64,24 +64,63 @@ class Storage {
     return this._db.del(key)
   }
 
-  public async filter(
-    filter: (value: string, key: string) => boolean,
+  async keys(
+    filter?: (value: string, key: string) => boolean,
     options?: AbstractIteratorOptions<any>):
     Promise<string[]> {
+
+    const result = await this._filter(filter, options)
+    return result.map(res => res[0])
+  }
+
+  async values(
+    filter?: (value: string, key: string) => boolean,
+    options?: AbstractIteratorOptions<any>):
+    Promise<string[]> {
+
+    const result = await this._filter(filter, options)
+    return result.map(res => res[1])
+  }
+
+  async forEach(
+    iteratee: (value: string, key: string) => false | void,
+    options?: AbstractIteratorOptions<any>):
+    Promise<void> {
+
+    return this._each(iteratee, options)
+  }
+
+  async clear():
+    Promise<void> {
+
+    // #FIX: getting error in dependency package
+    // return this._db.clear(err => {
+    //   console.log('cleared', err)
+    // })
+
+    // #WARNING: workaround
+    const keys = await this.keys()
+    await Promise.all(keys.map(key => this._db.del(key)))
+  }
+
+  private async _filter(
+    filter?: (value: string, key: string) => boolean,
+    options?: AbstractIteratorOptions<any>):
+    Promise<[string, string][]> {
 
     options = options || {}
     options.keyAsBuffer = false
     options.valueAsBuffer = false
     const iter = this._db.iterator(options)
-    const items: string[] = []
+    const items: [string, string][] = []
     let error: Error | undefined
     try {
       await pDoWhilst(
         () => this._next(iter),
         (result: [string, string] | undefined) => {
           if (result === undefined) return false
-          if (filter(result[1], result[0])) {
-            items.push(result[1])
+          if (!filter || filter(result[1], result[0])) {
+            items.push(result)
           }
           return true
         }
@@ -98,7 +137,7 @@ class Storage {
     return items
   }
 
-  public async forEach(
+  private async _each(
     iteratee: (value: string, key: string) => false | void,
     options?: AbstractIteratorOptions<any>):
     Promise<void> {
@@ -130,15 +169,7 @@ class Storage {
     })
   }
 
-  public async clear():
-    Promise<void> {
-
-    return this._db.clear(err => {
-      console.log('cleared', err)
-    })
-  }
-
-  private _next(
+  private async _next(
     iter: any):
     Promise<[string, string] | undefined> {
 

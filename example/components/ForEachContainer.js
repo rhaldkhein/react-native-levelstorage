@@ -19,10 +19,10 @@ function ForEachContainer() {
   const testId = 'foreach'
 
   const clickButton = async () => {
-    const newStorage = storage.create('foreach')
-    await Promise.all(data.map(item => newStorage.setItem(item.key, item.value)))
+    await storage.clear()
+    await Promise.all(data.map(item => storage.setItem(item.key, item.value)))
     let str = ''
-    await newStorage.forEach(v => {
+    await storage.forEach(v => {
       str += v
     })
     setValue(str) // shoud be alphabravocharlie
