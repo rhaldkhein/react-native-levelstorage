@@ -1,11 +1,13 @@
 {
   "inputFiles": ["./src"],
-  "mode": "modules",
+  "mode": "file",
   "out": "docs",
   "excludePrivate": true,
   "excludeExternals": true,
   "excludeNotExported": true,
+  "disableSources": true,
   "toc": [
     "Storage"
-  ]
+  ],
+  "plugin": "typedoc-plugin-markdown"
 }
