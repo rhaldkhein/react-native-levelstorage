@@ -1,6 +1,6 @@
 **[react-native-levelstorage](../README.md)**
 
-> [Globals](../globals.md) / Storage
+> [Globals](../globals.md) / ["levelstorage"](../modules/_levelstorage_.md) / Storage
 
 # Class: Storage\<T>
 
@@ -20,29 +20,29 @@ Name |
 
 ### Constructors
 
-* [constructor](storage.md#constructor)
+* [constructor](index.md#constructor)
 
 ### Accessors
 
-* [length](storage.md#length)
+* [length](index.md#length)
 
 ### Methods
 
-* [clear](storage.md#clear)
-* [create](storage.md#create)
-* [filter](storage.md#filter)
-* [forEach](storage.md#foreach)
-* [getItem](storage.md#getitem)
-* [keys](storage.md#keys)
-* [removeItem](storage.md#removeitem)
-* [setItem](storage.md#setitem)
-* [values](storage.md#values)
+* [clear](index.md#clear)
+* [create](index.md#create)
+* [filter](index.md#filter)
+* [forEach](index.md#foreach)
+* [getItem](index.md#getitem)
+* [keys](index.md#keys)
+* [removeItem](index.md#removeitem)
+* [setItem](index.md#setitem)
+* [values](index.md#values)
 
 ## Constructors
 
 ### constructor
 
-\+ **new Storage**(`name`: string, `buffer?`: boolean): [Storage](storage.md)
+\+ **new Storage**(`name`: string, `buffer?`: boolean): [Storage](index.md)
 
 The level storage instance. Key must be `string` and value can either be `string` or `buffer`.
 
@@ -55,7 +55,7 @@ Name | Type | Default value | Description |
 `name` | string | - | The name of the storage |
 `buffer` | boolean | false | Make values as buffer, instead of string  |
 
-**Returns:** [Storage](storage.md)
+**Returns:** [Storage](index.md)
 
 ## Accessors
 
@@ -81,7 +81,7 @@ ___
 
 ### create
 
-▸ **create**(`name`: string): [Storage](storage.md)\<string>
+▸ **create**(`name`: string): [Storage](index.md)\<string>
 
 Create new instance of storage with string type values.
 
@@ -91,9 +91,9 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `name` | string | The name of storage  |
 
-**Returns:** [Storage](storage.md)\<string>
+**Returns:** [Storage](index.md)\<string>
 
-▸ **create**(`name`: string, `buffer`: true): [Storage](storage.md)\<Buffer>
+▸ **create**(`name`: string, `buffer`: true): [Storage](index.md)\<Buffer>
 
 Create new instance of storage with Buffer type values.
 
@@ -104,7 +104,7 @@ Name | Type | Description |
 `name` | string | The name of storage |
 `buffer` | true | Set `true` to make values as buffer  |
 
-**Returns:** [Storage](storage.md)\<Buffer>
+**Returns:** [Storage](index.md)\<Buffer>
 
 ___
 

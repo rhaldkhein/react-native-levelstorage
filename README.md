@@ -32,7 +32,7 @@ await storage.getItem('hello') // -> "world"
 
 ### API
 
-Go to API Documention
+Go to [API Documentation](https://rhaldkhein.github.io/react-native-levelstorage/)
 
 ### License
 
