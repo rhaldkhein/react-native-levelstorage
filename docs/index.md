@@ -1,22 +1,6 @@
-**[react-native-levelstorage](../README.md)**
-
-> [Globals](../globals.md) / ["levelstorage"](../modules/_levelstorage_.md) / Storage
-
 # Class: Storage\<T>
 
 Fast and simple key-value pair storage for React Native using LevelDB native binding.
-
-## Type parameters
-
-Name |
------- |
-`T` |
-
-## Hierarchy
-
-* **Storage**
-
-## Index
 
 ### Constructors
 
