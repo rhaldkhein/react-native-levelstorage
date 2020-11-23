@@ -1,8 +1,16 @@
+/*!
+ * react-native-levelstorage
+ * Kevin Villanueva <https://github.com/rhaldkhein>
+ * MIT License
+ */
 import RNLevelDown from 'react-native-leveldown'
 import LevelUp, { LevelUp as ILevelUp } from 'levelup'
 import { AbstractIterator, AbstractIteratorOptions } from 'abstract-leveldown'
 import pDoWhilst from 'p-do-whilst'
 
+/**
+ * Fast and simple key-value pair storage for React Native using LevelDB native binding.
+ */
 export class Storage<T> {
 
   private _db: ILevelUp<RNLevelDown, AbstractIterator<string, T>>
