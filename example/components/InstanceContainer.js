@@ -5,7 +5,7 @@ import {
   Text,
   Button
 } from 'react-native'
-import storage from '../dist'
+import storage from '../dist/levelstorage'
 
 const data = [
   { key: 'instance', value: 'instance_value' }

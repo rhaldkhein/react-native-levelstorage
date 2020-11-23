@@ -5,7 +5,7 @@ import {
   Text,
   Button
 } from 'react-native'
-import storage from '../dist'
+import storage from '../dist/levelstorage'
 
 const data = [
   { key: 'filter_alpha', value: 'filter_value_alpha' },

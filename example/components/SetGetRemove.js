@@ -5,7 +5,7 @@ import {
   Text,
   Button
 } from 'react-native'
-import storage from '../dist'
+import storage from '../dist/levelstorage'
 
 function SetGetRemove({ id, itemKey, itemValue, promise }) {
   const testId = id + (promise ? '_promise' : '_callback')

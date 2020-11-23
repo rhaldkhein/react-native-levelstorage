@@ -1,0 +1,11 @@
+{
+  "inputFiles": ["./src"],
+  "mode": "modules",
+  "out": "doc",
+  "excludePrivate": true,
+  "excludeExternals": true,
+  "excludeNotExported": true,
+  "toc": [
+    "Storage"
+  ]
+}

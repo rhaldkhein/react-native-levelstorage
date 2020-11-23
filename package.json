@@ -2,7 +2,7 @@
   "name": "react-native-levelstorage",
   "version": "0.1.0-0",
   "description": "Fast and simple key-value pair storage for React Native using LevelDB native binding.",
-  "main": "index.js",
+  "main": "dist/levelstorage.js",
   "scripts": {
     "start": "cd example && npm start",
     "android": "cd example && npm run android",
@@ -13,8 +13,8 @@
     "postinstall": "cd example && npm install",
     "test:android": "npm run build:e2e:android && cd example && detox test -c android.release",
     "test:ios": "npm run build:e2e:ios && cd example && detox test -c ios.release",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "doc": "typedoc --out docs src --excludePrivate"
+    "test": "echo \"Error: use test:android or test:ios\" && exit 1",
+    "doc": "typedoc"
   },
   "repository": {
     "type": "git",
