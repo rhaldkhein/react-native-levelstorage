@@ -13,7 +13,8 @@
     "postinstall": "cd example && npm install",
     "test:android": "npm run build:e2e:android && cd example && detox test -c android.release",
     "test:ios": "npm run build:e2e:ios && cd example && detox test -c ios.release",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "doc": "typedoc --out docs src --excludePrivate"
   },
   "repository": {
     "type": "git",

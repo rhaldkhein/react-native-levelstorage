@@ -37,10 +37,12 @@ describe('Example', () => {
     await expect(element(by.id('clear_value'))).toHaveText('0')
   })
 
-  it('filter', async () => {
+  it('keys, values, filter', async () => {
     await element(by.id('filter')).tap()
-    await expect(element(by.id('filter_keys'))).toHaveText('2')
-    await expect(element(by.id('filter_values'))).toHaveText('3')
+    await expect(element(by.id('filter_keys'))).toHaveText('4')
+    await expect(element(by.id('filter_values'))).toHaveText('4')
+    await expect(element(by.id('filter_itemskey'))).toHaveText('2')
+    await expect(element(by.id('filter_itemsvalue'))).toHaveText('3')
   })
 
   it('foreach', async () => {

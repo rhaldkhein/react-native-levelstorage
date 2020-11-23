@@ -19,25 +19,56 @@ class Storage {
     })
   }
 
-  create(
+  /**
+   * Clears the storage.
+   */
+  public async clear():
+    Promise<void> {
+
+    // #FIX: getting error in dependency package
+    // return this._db.clear(err => {
+    //   console.log('cleared', err)
+    // })
+
+    // #WARNING: workaround
+    const keys = await this.keys()
+    await Promise.all(keys.map(key => this._db.del(key)))
+  }
+
+  /**
+   * Create new instance of storage.
+   * @param name
+   */
+  public create(
     name: string):
     Storage {
 
     return new Storage(name)
   }
 
-  async setItem(
-    key: string,
-    value: string):
-    Promise<void> {
+  /**
+   * Iterates over elements of collection, returning an array of all elements predicate returns truthy for.
+   * @param condition function to invoke per iteration
+   * @param options
+   */
+  public async filter(
+    condition: (value: string, key: string) => boolean,
+    options?: AbstractIteratorOptions<any>):
+    Promise<string[]> {
 
-    if (typeof key !== 'string' || typeof value !== 'string') {
-      throw new Error('Key and value must be string')
-    }
-    return this._db.put(key, value)
+    const result = await this._filter(condition, options)
+    return result.map(res => res[1])
   }
 
-  async getItem(
+  public async forEach(
+    iteratee: (value: string, key: string) => false | void,
+    options?: AbstractIteratorOptions<any>):
+    Promise<void> {
+
+    return this._each(iteratee, options)
+  }
+
+  public async getItem(
     key: string):
     Promise<string | null> {
 
@@ -54,7 +85,14 @@ class Storage {
     return null
   }
 
-  async removeItem(
+  public async keys():
+    Promise<string[]> {
+
+    const result = await this._filter()
+    return result.map(res => res[0])
+  }
+
+  public async removeItem(
     key: string):
     Promise<void> {
 
@@ -64,43 +102,22 @@ class Storage {
     return this._db.del(key)
   }
 
-  async keys(
-    filter?: (value: string, key: string) => boolean,
-    options?: AbstractIteratorOptions<any>):
-    Promise<string[]> {
+  public async setItem(
+    key: string,
+    value: string):
+    Promise<void> {
 
-    const result = await this._filter(filter, options)
-    return result.map(res => res[0])
+    if (typeof key !== 'string' || typeof value !== 'string') {
+      throw new Error('Key and value must be string')
+    }
+    return this._db.put(key, value)
   }
 
-  async values(
-    filter?: (value: string, key: string) => boolean,
-    options?: AbstractIteratorOptions<any>):
+  public async values():
     Promise<string[]> {
 
-    const result = await this._filter(filter, options)
+    const result = await this._filter()
     return result.map(res => res[1])
-  }
-
-  async forEach(
-    iteratee: (value: string, key: string) => false | void,
-    options?: AbstractIteratorOptions<any>):
-    Promise<void> {
-
-    return this._each(iteratee, options)
-  }
-
-  async clear():
-    Promise<void> {
-
-    // #FIX: getting error in dependency package
-    // return this._db.clear(err => {
-    //   console.log('cleared', err)
-    // })
-
-    // #WARNING: workaround
-    const keys = await this.keys()
-    await Promise.all(keys.map(key => this._db.del(key)))
   }
 
   private async _filter(
