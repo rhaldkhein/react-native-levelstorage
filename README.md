@@ -1,6 +1,6 @@
 # react-native-levelstorage
 
-Fast and simple key-value pair storage for React Native using LevelDB native binding.
+Fast and simple key-value pair persistent storage for React Native using LevelDB native binding.
 
 This package wraps [react-native-leveldown](https://github.com/andymatuschak/react-native-leveldown) and [levelup](https://github.com/Level/levelup) and provides LocalStorage-like API. Big thanks to them for creating LevelDB native bindings for both Android and iOS. 
 
@@ -55,8 +55,8 @@ const posts = storage.create('posts')
 
 // Buffer storage for images (pass `true`)
 const images = storage.create('images', true)
-images.setItem('123', Buffer.from([0, 0, 0]))
-images.getItem('123') // -> Buffer
+await images.setItem('123', Buffer.from([0, 0, 0]))
+await images.getItem('123') // -> Buffer
 ```
 
 ### API
