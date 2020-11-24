@@ -13,13 +13,13 @@ This package wraps [react-native-leveldown](https://github.com/andymatuschak/rea
 
 ### Requirements
 
-- react: 16.8+
 - react-native: 0.60+
+- react-native-leveldown: 1.0.0+
 
 ### Install
 
 ```sh
-npm install react-native-levelstorage
+npm install react-native-levelstorage react-native-leveldown
 ```
 
 ### Usage
