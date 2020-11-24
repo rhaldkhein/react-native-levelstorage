@@ -5,9 +5,9 @@ import {
   Text,
   Button
 } from 'react-native'
-import storage from '../dist/levelstorage'
+import { Buffer } from 'buffer'
 
-function SetGetRemove({ id, itemKey, itemValue, promise }) {
+function SetGetRemove({ id, itemKey, itemValue, promise, storage }) {
   const testId = id + (promise ? '_promise' : '_callback')
   const [value, setValue] = useState()
   const clickSetGet = promise
@@ -52,7 +52,9 @@ function SetGetRemove({ id, itemKey, itemValue, promise }) {
         onPress={clickRemove}
         title={testId + '_remove'} />
       <Text testID={testId + '_value'}>
-        {value === null ? 'null' : value}
+        {value === null ? 'null' : (
+          Buffer.isBuffer(value) ? value.toString('base64') : value
+        )}
       </Text>
     </View>
   )

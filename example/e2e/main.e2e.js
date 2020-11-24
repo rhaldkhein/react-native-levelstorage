@@ -1,3 +1,4 @@
+import { Buffer } from 'buffer'
 
 describe('Example', () => {
 
@@ -10,10 +11,17 @@ describe('Example', () => {
   });
 
   it('set, get, remove', async () => {
+    // string
     await element(by.id('string_a_promise_setget')).tap()
     await expect(element(by.id('string_a_promise_value'))).toHaveText('setget_value_a')
     await element(by.id('string_a_promise_remove')).tap()
     await expect(element(by.id('string_a_promise_value'))).toHaveText('null')
+    // buffer
+    const buffer = Buffer.from([1, 2, 3])
+    await element(by.id('buffer_promise_setget')).tap()
+    await expect(element(by.id('buffer_promise_value'))).toHaveText(buffer.toString('base64'))
+    await element(by.id('buffer_promise_remove')).tap()
+    await expect(element(by.id('buffer_promise_value'))).toHaveText('null')
   })
 
   it('parallel operation', async () => {

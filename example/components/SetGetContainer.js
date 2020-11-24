@@ -11,6 +11,10 @@ import {
   View,
 } from 'react-native';
 import SetGetRemove from './SetGetRemove'
+import storage from '../dist/levelstorage'
+import { Buffer } from 'buffer'
+
+const bufferStorage = storage.create('buffer', true)
 
 const data = [
   { id: 'string_a', key: 'setget_a', value: 'setget_value_a' },
@@ -24,6 +28,7 @@ const SetGetContainer = () => {
         data.map(item => {
           return <View key={item.id}>
             <SetGetRemove
+              storage={storage}
               itemValue={item.value}
               itemKey={item.key}
               id={item.id}
@@ -31,6 +36,14 @@ const SetGetContainer = () => {
           </View>
         })
       }
+      <View>
+        <SetGetRemove
+          storage={bufferStorage}
+          itemValue={Buffer.from([1, 2, 3])}
+          itemKey={'buffer_key'}
+          id={'buffer'}
+          promise={true} />
+      </View>
     </View>
   );
 };

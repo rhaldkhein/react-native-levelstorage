@@ -177,8 +177,11 @@ export class Storage<T> {
     value: T):
     Promise<void> {
 
-    if (typeof key !== 'string' || typeof value !== 'string') {
-      throw new Error('Key and value must be string')
+    if (typeof key !== 'string') {
+      throw new Error('Key must be string')
+    }
+    if (!this._buffer && typeof key !== 'string') {
+      throw new Error('Value must be string')
     }
     return this._db.put(key, value)
   }
