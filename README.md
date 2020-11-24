@@ -24,10 +24,37 @@ npm install react-native-levelstorage react-native-leveldown
 
 ### Usage
 
+Basic:
 ```js
 import storage from 'react-native-levelstorage'
 await storage.setItem('hello', 'world')
 await storage.getItem('hello') // -> "world"
+await storage.removeItem('hello')
+await storage.clear()
+```
+
+Loop & Filter:
+```js
+await storage.forEach((value, key) => {
+  // do something with value and key
+})
+const result = await storage.filter((value, key) => {
+  return value.indexOf('foo') > -1
+})
+```
+
+Multi Storage:
+```js
+const users = await storage.create('users')
+const jd = { id: 123, name: 'John Doe', age: 120 }
+await users.setItem('123', JSON.stringify(jd))
+
+const posts = await storage.create('posts')
+// do something with posts storage
+
+// Buffer storage for images
+const images = await storage.create('images', true)
+images.setItem('123', Buffer.from([0, 0, 0]))
 ```
 
 ### API
