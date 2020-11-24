@@ -2,7 +2,7 @@
 
 Fast and simple key-value pair storage for React Native using LevelDB native binding.
 
-This package wraps [react-native-leveldown](https://github.com/andymatuschak/react-native-leveldown) and [levelup](https://github.com/Level/levelup) and provides LocalStorage like API. Big thanks to them for creating LevelDB native bindings for both Android and iOS. 
+This package wraps [react-native-leveldown](https://github.com/andymatuschak/react-native-leveldown) and [levelup](https://github.com/Level/levelup) and provides LocalStorage-like API. Big thanks to them for creating LevelDB native bindings for both Android and iOS. 
 
 ### Features
 
@@ -41,6 +41,7 @@ await storage.forEach((value, key) => {
 const result = await storage.filter((value, key) => {
   return value.indexOf('foo') > -1
 })
+// result is array of values that contains `foo`
 ```
 
 Multi Storage:
@@ -49,12 +50,13 @@ const users = await storage.create('users')
 const jd = { id: 123, name: 'John Doe', age: 120 }
 await users.setItem('123', JSON.stringify(jd))
 
+// New storage for posts
 const posts = await storage.create('posts')
-// do something with posts storage
 
-// Buffer storage for images
+// Buffer storage for images (pass `true`)
 const images = await storage.create('images', true)
 images.setItem('123', Buffer.from([0, 0, 0]))
+images.getItem('123') // -> Buffer
 ```
 
 ### API
