@@ -1,8 +1,8 @@
 # react-native-levelstorage
 
-Fast and simple key-value pair storage for React Native using LevelDB native binding.  This package wraps [react-native-leveldown](https://github.com/andymatuschak/react-native-leveldown) and [levelup](https://github.com/Level/levelup) and provides LocalStorage like API.
+Fast and simple key-value pair storage for React Native using LevelDB native binding.
 
-Big thanks to them for creating LevelDB native bindings for both Android and iOS. 
+This package wraps [react-native-leveldown](https://github.com/andymatuschak/react-native-leveldown) and [levelup](https://github.com/Level/levelup) and provides LocalStorage like API. Big thanks to them for creating LevelDB native bindings for both Android and iOS. 
 
 ### Features
 
@@ -25,7 +25,7 @@ npm install react-native-levelstorage
 ### Usage
 
 ```js
-const storage = require('react-native-levelstorage')
+import storage from 'react-native-levelstorage'
 await storage.setItem('hello', 'world')
 await storage.getItem('hello') // -> "world"
 ```

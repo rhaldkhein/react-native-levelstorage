@@ -10,7 +10,6 @@
     "build:e2e": "tsc --outDir example/dist",
     "build": "tsc --outDir dist",
     "doc": "typedoc",
-    "postinstall": "cd example && npm install",
     "prepare": "npm run build",
     "start": "cd example && npm start",
     "test:android": "npm run build:e2e:android && cd example && detox test -c android.release",
