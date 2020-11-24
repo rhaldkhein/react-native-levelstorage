@@ -46,15 +46,15 @@ const result = await storage.filter((value, key) => {
 
 Multi Storage:
 ```js
-const users = await storage.create('users')
+const users = storage.create('users')
 const jd = { id: 123, name: 'John Doe', age: 120 }
 await users.setItem('123', JSON.stringify(jd))
 
 // New storage for posts
-const posts = await storage.create('posts')
+const posts = storage.create('posts')
 
 // Buffer storage for images (pass `true`)
-const images = await storage.create('images', true)
+const images = storage.create('images', true)
 images.setItem('123', Buffer.from([0, 0, 0]))
 images.getItem('123') // -> Buffer
 ```
