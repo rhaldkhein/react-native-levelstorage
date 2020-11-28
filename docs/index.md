@@ -28,7 +28,7 @@ Fast and simple key-value pair storage for React Native using LevelDB native bin
 
 \+ **new Storage**(`name`: string, `buffer?`: boolean): [Storage](index.md)
 
-The level storage instance. Key must be `string` and value can either be `string` or `buffer`.
+The level storage instance. Key must be `string | number` and value can either be `string` or `buffer`.
 
 Default: `string`.
 
@@ -98,6 +98,12 @@ ___
 
 Iterates over items, returning new array of all items predicate returns truthy for.
 
+Options:
+- `gt` (greater than), `gte` (greater than or equal) define the lower bound of the range to be iterated.
+- `lt` (less than), `lte` (less than or equal) define the higher bound of the range to be iterated.
+- `reverse` (boolean, default: false): iterate entries in reverse order.
+- `limit` (number, default: -1): limit the number of entries collected by this iterator.
+
 Type `T` is either `string` or `buffer`.
 
 #### Parameters:
@@ -105,7 +111,7 @@ Type `T` is either `string` or `buffer`.
 Name | Type | Description |
 ------ | ------ | ------ |
 `condition` | (value: T, key: string) => boolean | The function to invoke per iteration |
-`options?` | AbstractIteratorOptions\<any> | The options object - `gt` (greater than), `gte` (greater than or equal) define the lower bound of the range to be iterated. - `lt` (less than), `lte` (less than or equal) define the higher bound of the range to be iterated. - `reverse` (boolean, default: false): iterate entries in reverse order. - `limit` (number, default: -1): limit the number of entries collected by this iterator.  |
+`options?` | AbstractIteratorOptions\<any> | The options object  |
 
 **Returns:** Promise\<T[]>
 
@@ -130,15 +136,16 @@ ___
 
 ### getItem
 
-▸ **getItem**(`key`: string): Promise\<T \| null>
+▸ **getItem**(`key`: string \| number): Promise\<T \| null>
 
 Get the value. Either `string` or `buffer` depending on what you specified.
+Will convert `key` to string if not string.
 
 #### Parameters:
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`key` | string | Name of the item  |
+`key` | string \| number | Name of the item  |
 
 **Returns:** Promise\<T \| null>
 
@@ -156,15 +163,16 @@ ___
 
 ### removeItem
 
-▸ **removeItem**(`key`: string): Promise\<void>
+▸ **removeItem**(`key`: string \| number): Promise\<void>
 
-Remove the item in storage
+Remove the item in storage.
+Will convert `key` to string if not string.
 
 #### Parameters:
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`key` | string | Name of the item  |
+`key` | string \| number | Name of the item  |
 
 **Returns:** Promise\<void>
 
@@ -172,15 +180,16 @@ ___
 
 ### setItem
 
-▸ **setItem**(`key`: string, `value`: T): Promise\<void>
+▸ **setItem**(`key`: string \| number, `value`: T): Promise\<void>
 
-Store a value
+Store a value. Must be `string` or `buffer` depending on what you specified.
+Will convert `key` to string if not string.
 
 #### Parameters:
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`key` | string | Name of the item |
+`key` | string \| number | Name of the item |
 `value` | T | Value to store  |
 
 **Returns:** Promise\<void>
