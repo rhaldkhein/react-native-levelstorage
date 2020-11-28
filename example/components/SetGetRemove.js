@@ -7,39 +7,19 @@ import {
 } from 'react-native'
 import { Buffer } from 'buffer'
 
-function SetGetRemove({ id, itemKey, itemValue, promise, storage }) {
-  const testId = id + (promise ? '_promise' : '_callback')
+function SetGetRemove({ id, itemKey, itemValue, storage }) {
+  const testId = id
   const [value, setValue] = useState()
-  const clickSetGet = promise
-    ? async () => {
-      await storage.setItem(itemKey, itemValue)
-      const value = await storage.getItem(itemKey)
-      setValue(value)
-    }
-    : () => {
-      storage.setItem(itemKey, itemValue, err => {
-        if (err) return
-        storage.getItem(itemKey, (err, value) => {
-          if (err) return
-          setValue(value)
-        })
-      })
-    }
-  const clickRemove = promise
-    ? async () => {
-      await storage.removeItem(itemKey)
-      const value = await storage.getItem(itemKey)
-      setValue(value)
-    }
-    : () => {
-      storage.removeItem(itemKey, err => {
-        if (err) return
-        storage.getItem(itemKey, (err, value) => {
-          if (err) return
-          setValue(value)
-        })
-      })
-    }
+  const clickSetGet = async () => {
+    await storage.setItem(itemKey, itemValue)
+    const value = await storage.getItem(itemKey)
+    setValue(value)
+  }
+  const clickRemove = async () => {
+    await storage.removeItem(itemKey)
+    const value = await storage.getItem(itemKey)
+    setValue(value)
+  }
 
   return (
     <View>

@@ -17,7 +17,7 @@ export class Storage<T> {
   private _buffer: boolean
 
   /**
-   * The level storage instance. Key must be `string` and value can either be `string` or `buffer`.
+   * The level storage instance. Key must be `string | number` and value can either be `string` or `buffer`.
    *
    * Default: `string`.
    * @param name The name of the storage
@@ -92,13 +92,15 @@ export class Storage<T> {
   /**
    * Iterates over items, returning new array of all items predicate returns truthy for.
    *
-   * Type `T` is either `string` or `buffer`.
-   * @param condition The function to invoke per iteration
-   * @param options The options object
+   * Options:
    * - `gt` (greater than), `gte` (greater than or equal) define the lower bound of the range to be iterated.
    * - `lt` (less than), `lte` (less than or equal) define the higher bound of the range to be iterated.
    * - `reverse` (boolean, default: false): iterate entries in reverse order.
    * - `limit` (number, default: -1): limit the number of entries collected by this iterator.
+   *
+   * Type `T` is either `string` or `buffer`.
+   * @param condition The function to invoke per iteration
+   * @param options The options object
    */
   public async filter(
     condition: (value: T, key: string) => boolean,
@@ -124,16 +126,14 @@ export class Storage<T> {
 
   /**
    * Get the value. Either `string` or `buffer` depending on what you specified.
+   * Will convert `key` to string if not string.
    * @param key Name of the item
    */
   public async getItem(
-    key: string):
+    key: string | number):
     Promise<T | null> {
 
     try {
-      if (typeof key !== 'string') {
-        throw new Error('Key must be string')
-      }
       return await this._db.get(key, { asBuffer: this._buffer })
     } catch (error) {
       if (error.type !== 'NotFoundError') {
@@ -154,33 +154,29 @@ export class Storage<T> {
   }
 
   /**
-   * Remove the item in storage
+   * Remove the item in storage.
+   * Will convert `key` to string if not string.
    * @param key Name of the item
    */
   public async removeItem(
-    key: string):
+    key: string | number):
     Promise<void> {
 
-    if (typeof key !== 'string') {
-      throw new Error('Key must be string')
-    }
     return this._db.del(key)
   }
 
   /**
-   * Store a value
+   * Store a value. Must be `string` or `buffer` depending on what you specified.
+   * Will convert `key` to string if not string.
    * @param key Name of the item
    * @param value Value to store
    */
   public async setItem(
-    key: string,
+    key: string | number,
     value: T):
     Promise<void> {
 
-    if (typeof key !== 'string') {
-      throw new Error('Key must be string')
-    }
-    if (!this._buffer && typeof key !== 'string') {
+    if (!this._buffer && typeof value !== 'string') {
       throw new Error('Value must be string')
     }
     return this._db.put(key, value)

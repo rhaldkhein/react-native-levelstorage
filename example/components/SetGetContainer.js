@@ -18,7 +18,8 @@ const bufferStorage = storage.create('buffer', true)
 
 const data = [
   { id: 'string_a', key: 'setget_a', value: 'setget_value_a' },
-  { id: 'string_b', key: 'setget_b', value: 'setget_value_b' }
+  { id: 'string_b', key: 'setget_b', value: 'setget_value_b' },
+  { id: 'number', key: 123, value: 'setget_value_number' }
 ]
 
 const SetGetContainer = () => {

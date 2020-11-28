@@ -12,27 +12,32 @@ describe('Example', () => {
 
   it('set, get, remove', async () => {
     // string
-    await element(by.id('string_a_promise_setget')).tap()
-    await expect(element(by.id('string_a_promise_value'))).toHaveText('setget_value_a')
-    await element(by.id('string_a_promise_remove')).tap()
-    await expect(element(by.id('string_a_promise_value'))).toHaveText('null')
+    await element(by.id('string_a_setget')).tap()
+    await expect(element(by.id('string_a_value'))).toHaveText('setget_value_a')
+    await element(by.id('string_a_remove')).tap()
+    await expect(element(by.id('string_a_value'))).toHaveText('null')
     // buffer
     const buffer = Buffer.from([1, 2, 3])
-    await element(by.id('buffer_promise_setget')).tap()
-    await expect(element(by.id('buffer_promise_value'))).toHaveText(buffer.toString('base64'))
-    await element(by.id('buffer_promise_remove')).tap()
-    await expect(element(by.id('buffer_promise_value'))).toHaveText('null')
+    await element(by.id('buffer_setget')).tap()
+    await expect(element(by.id('buffer_value'))).toHaveText(buffer.toString('base64'))
+    await element(by.id('buffer_remove')).tap()
+    await expect(element(by.id('buffer_value'))).toHaveText('null')
+    // number key
+    await element(by.id('number_setget')).tap()
+    await expect(element(by.id('number_value'))).toHaveText('setget_value_number')
+    await element(by.id('number_remove')).tap()
+    await expect(element(by.id('number_value'))).toHaveText('null')
   })
 
   it('parallel operation', async () => {
     await Promise.all([
-      element(by.id('string_a_promise_setget')).tap(),
-      element(by.id('string_b_promise_setget')).tap()
+      element(by.id('string_a_setget')).tap(),
+      element(by.id('string_b_setget')).tap()
     ])
-    await expect(element(by.id('string_a_promise_value'))).toHaveText('setget_value_a')
-    await expect(element(by.id('string_b_promise_value'))).toHaveText('setget_value_b')
-    await element(by.id('string_a_promise_remove')).tap()
-    await element(by.id('string_b_promise_remove')).tap()
+    await expect(element(by.id('string_a_value'))).toHaveText('setget_value_a')
+    await expect(element(by.id('string_b_value'))).toHaveText('setget_value_b')
+    await element(by.id('string_a_remove')).tap()
+    await element(by.id('string_b_remove')).tap()
   })
 
   it('create new instance', async () => {
